@@ -89,6 +89,16 @@ include("cabi/cabi_forward.jl")  # in-process LBT forward registry (@cfunction p
 include("lbt.jl")           # activate/deactivate via BLAS.lbt_set_forward
 include("tune.jl")          # per-machine tuning status + tune!() (spawns bench/calibrate.jl; NO benchmark here)
 
+"""
+    PureBLAS.wasm_foreign_functions(; mode = :all) -> Vector
+
+LinearAlgebra's BLAS and LAPACK calls answered by PureBLAS in a program compiled to WebAssembly by
+WasmCodegen: pass it as `WasmCodegen.Config(foreign_functions = ...)`. `mode = :fill` leaves to
+WasmCodegen's runtime the functions it implements itself. Defined by the extension loaded with
+WasmCodegen; see `WASM.md`.
+"""
+function wasm_foreign_functions end
+
 # ── Precompile workload ────────────────────────────────────────────────────────────────────────────
 # Run the hot native kernels once at precompile time so their native code is cached in the .ji — first-call
 # gemm!/potrf!/eigen drops from ~3.5ms (base inference only) to ~0.06ms. Precompile-time only (the macros
