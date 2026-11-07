@@ -340,13 +340,15 @@ on a part with a wider line or a wider vector it is wider, and the code must not
     bytes = ld * n * sizeof(T)
     a = s.a
     slab = a.slabs[a.cur]
-    base = UInt(pointer(slab)) + a.off
-    adj = Int((-base) & (_ARENA_ALIGN - 1))
+    # The pointer is moved by pointer arithmetic, not rebuilt from an integer: the same address natively,
+    # and it keeps the slab as its owner where pointers have one (WebAssembly via WasmCodegen).
+    base = pointer(slab) + a.off
+    adj = Int((-UInt(base)) & (_ARENA_ALIGN - 1))
     if a.off + adj + bytes > length(slab)
         _arena_grow!(a, adj + bytes + _ARENA_ALIGN)
         slab = a.slabs[a.cur]
-        base = UInt(pointer(slab))
-        adj = Int((-base) & (_ARENA_ALIGN - 1))
+        base = pointer(slab)
+        adj = Int((-UInt(base)) & (_ARENA_ALIGN - 1))
     end
     a.off += adj + bytes + _arena_offway(bytes)
     return PtrMatrix{T}(Ptr{T}(base + adj), m, n, ld)
