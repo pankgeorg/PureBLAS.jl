@@ -119,6 +119,13 @@ quietly rotting.
 > Do not load this `.so` into a running Julia process. It embeds its own libjulia, which double-initializes
 > and aborts. Inside Julia, use `PureBLAS.activate()` instead — it needs no shared library at all.
 
+## WebAssembly
+
+PureBLAS compiles to WebAssembly with [WasmCodegen.jl](https://github.com/gbaraldi/WasmCodegen.jl), so unmodified
+LinearAlgebra code (Float64 and ComplexF64 `lu`, `qr`, `cholesky`, `svd`, `eigen`, `exp`, ...) runs in a browser or
+in Node. A prebuilt module is attached to the `wasm-v*` releases. See [WASM.md](WASM.md) for how to use it from
+JavaScript, how to compile your own program, and its limits.
+
 ## Limitations
 
 Everything is single-threaded for now; multithreading is deliberately on hold.
