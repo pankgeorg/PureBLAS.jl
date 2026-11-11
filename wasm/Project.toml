@@ -9,8 +9,11 @@ WasmCodegen = "5b0f1d7e-3c2a-4e8b-9a61-7d2f4c8e1a93"
 WasmCompat = "740f80e5-dc3a-45f1-9413-3050938ad54a"
 
 [sources]
-IRStructurizer = {url = "https://github.com/maleadt/IRStructurizer.jl", rev = "470579857944170ad41dea4ee8e9ad5889f6783e"}
+IRStructurizer = {url = "https://github.com/maleadt/IRStructurizer.jl", rev = "0c96648625e053b519fed8b88f9c5218241be626"}
 PureBLAS = {path = ".."}
-WasmBuilder = {url = "https://github.com/gbaraldi/WasmBuilder.jl", rev = "487344fa7243681232353ee3a2d8bc4041487638"}
-WasmCodegen = {url = "https://github.com/gbaraldi/WasmCodegen.jl", rev = "aee4e97c7d1519d20d1691b8fe75fb33240f33f2"}
-WasmCompat = {url = "https://github.com/pankgeorg/WasmCompat.jl", rev = "simd-lanes"}
+WasmBuilder = {url = "https://github.com/gbaraldi/WasmBuilder.jl", rev = "0664dafc791c74b1f4cca4f72df86e6bd43503d9"}
+WasmCodegen = {url = "https://github.com/gbaraldi/WasmCodegen.jl", rev = "98cad1fe08d6420a8eff26c20b16b1067874dc98"}
+WasmCompat = {url = "https://github.com/JuliaWASM/WasmCompat.jl", rev = "c57da6ccd5bcff294fd06d9ba76b2e1543f135fe"}
+
+[compat]
+WasmBuilder = "0.1.1"

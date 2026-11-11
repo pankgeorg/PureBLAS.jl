@@ -18,14 +18,16 @@ program, so native PureBLAS is unchanged.
   `_trsv_reg_n!` takes `_trsv_simd!`, the path the ladder falls through to above its bound.
 - **Double-shift Hessenberg QR at every size (a speed choice, not a workaround):** `_dlaqr0!`
   takes `_dlahqr!`, as PureBLAS does natively for n ≤ 200. In Wasm, multishift QR (`_dlaqr5!`)
-  is 1.25× slower at n = 256 and 1.45× slower at n = 512 (real `geev`), and its module is 15%
-  larger: its advantage is level-3 BLAS, which is the slow part in Wasm.
+  is 1.23× slower at n = 256 and 1.19× slower at n = 512 (real `eigen`, Node 24, WasmCodegen
+  with SIMD128), and its module is 25% larger: its advantage is level-3 BLAS, which is the slow
+  part in Wasm.
 
 [`PureBLAS.wasm_foreign_functions`](@ref) routes unmodified LinearAlgebra's BLAS and LAPACK calls
 to PureBLAS, through `WasmCodegen.Config(foreign_functions)`.
 
 The SIMD.jl vector intrinsics PureBLAS's kernels use are not here: they are generic, and
-`WasmCompatSIMDExt` (WasmCompat.jl) runs them lane by lane.
+`WasmCompatSIMDExt` (WasmCompat.jl) compiles 16-byte float vectors to WebAssembly SIMD128
+(WasmCodegen's `SIMD128`) and runs the others lane by lane.
 """
 module PureBLASWasmCodegenExt
 
